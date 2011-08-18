@@ -1,0 +1,8 @@
+#!/bin/bash          
+echo Ensure 'classes' directory exists
+mkdir classes
+echo Compile comm.testsuite.TestSuite and associated classes
+javac -d classes -sourcepath ./src -cp lib/jna.jar src/comm/testsuite/TestSuite.java
+echo Run comm.testsuite.TestSuite
+java -cp classes:lib/jna.jar comm.testsuite.TestSuite
+

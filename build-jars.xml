@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- this does NOT compile the project, instead packages the classes and sources to two jar files-->
+<project name="comm" default="buildjar" basedir=".">
+	<target name="init">
+	</target>
+	<!-- create .jar -->
+	<target name="buildjar" depends="init">
+	    <delete file="./bin/comm.jar" failonerror="false" quiet="true" />
+		<jar jarfile="./bin/comm.jar" basedir="./target/classes/" />
+	    
+		<delete file="./bin/comm-src.jar" failonerror="false" quiet="true" />
+		<jar jarfile="./bin/comm-sources.jar" basedir="./src/main/java/" />
+	</target>
+
+</project>
+
+<!-- end file build.xml -->
