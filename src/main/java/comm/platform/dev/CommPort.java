@@ -31,6 +31,7 @@ package comm.platform.dev;
 import comm.PortType;
 import comm.util.StringUtil;
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.nio.CharBuffer;
 import java.nio.charset.CharacterCodingException;
 import java.nio.charset.Charset;
@@ -289,8 +290,78 @@ public abstract class CommPort extends DisposableObject implements comm.CommPort
 	}
 	
 	@Override
+	public final boolean write(byte value) {
+		return writeSystem(ByteBuffer.allocate(BYTE_SIZE).put(value), 0, BYTE_SIZE);
+	}
+	
+	@Override
+	public final boolean write(short value) {
+		return writeSystem(ByteBuffer.allocate(SHORT_SIZE).putShort(value), 0, SHORT_SIZE);
+	}
+	
+	@Override
+	public final boolean write(int value) {
+		return writeSystem(ByteBuffer.allocate(INTEGER_SIZE).putInt(value), 0, INTEGER_SIZE);
+	}
+	
+	@Override
+	public final boolean write(long value) {
+		return writeSystem(ByteBuffer.allocate(LONG_SIZE).putLong(value), 0, LONG_SIZE);
+	}
+	
+	@Override
+	public final boolean write(float value) {
+		return writeSystem(ByteBuffer.allocate(FLOAT_SIZE).putFloat(value), 0, FLOAT_SIZE);
+	}
+	
+	@Override
+	public final boolean write(double value) {
+		return writeSystem(ByteBuffer.allocate(DOUBLE_SIZE).putDouble(value), 0, DOUBLE_SIZE);
+	}
+	
+	@Override
+	public final boolean write(char value) {
+		return writeSystem(ByteBuffer.allocate(CHAR_SIZE).putChar(value), 0, CHAR_SIZE);
+	}
+	
+	@Override
 	public final boolean write(byte[] buffer, int offset, int length) {
 		return writeSystem(ByteBuffer.wrap(buffer), offset, length);
+	}
+	
+	@Override
+	public final boolean write(short value, ByteOrder order) {
+		return writeSystem(ByteBuffer.allocate(SHORT_SIZE).order(order).putShort(value), 0, SHORT_SIZE);
+	}
+	
+	@Override
+	public final boolean write(int value, ByteOrder order) {
+		return writeSystem(ByteBuffer.allocate(INTEGER_SIZE).order(order).putInt(value), 0, INTEGER_SIZE);
+	}
+	
+	@Override
+	public final boolean write(long value, ByteOrder order) {
+		return writeSystem(ByteBuffer.allocate(LONG_SIZE).order(order).putLong(value), 0, LONG_SIZE);
+	}
+	
+	@Override
+	public final boolean write(float value, ByteOrder order) {
+		return writeSystem(ByteBuffer.allocate(FLOAT_SIZE).order(order).putFloat(value), 0, FLOAT_SIZE);
+	}
+	
+	@Override
+	public final boolean write(double value, ByteOrder order) {
+		return writeSystem(ByteBuffer.allocate(DOUBLE_SIZE).order(order).putDouble(value), 0, DOUBLE_SIZE);
+	}
+	
+	@Override
+	public final boolean write(char value, ByteOrder order) {
+		return writeSystem(ByteBuffer.allocate(CHAR_SIZE).order(order).putChar(value), 0, CHAR_SIZE);
+	}
+	
+	@Override
+	public final boolean write(byte[] buffer, int offset, int length, ByteOrder order) {
+		return writeSystem(ByteBuffer.wrap(buffer).order(order), offset, length);
 	}
 
 	@Override

@@ -29,6 +29,7 @@
 package comm;
 
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.nio.CharBuffer;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
@@ -54,6 +55,18 @@ public interface ICommPort extends IDisposable {
 	
 	public static final int 
 		  DEFAULT_THREAD_POOL_SIZE = Math.max(1, Runtime.getRuntime().availableProcessors()) * 2
+	;
+	
+	public static final int 
+		  BYTE_SIZE     = Byte.SIZE      / Byte.SIZE
+		, SHORT_SIZE    = Short.SIZE     / Byte.SIZE
+		, INTEGER_SIZE  = Integer.SIZE   / Byte.SIZE
+		, LONG_SIZE     = Long.SIZE      / Byte.SIZE
+		
+		, FLOAT_SIZE    = Float.SIZE     / Byte.SIZE
+		, DOUBLE_SIZE   = Double.SIZE    / Byte.SIZE
+		
+		, CHAR_SIZE     = Character.SIZE / Byte.SIZE
 	;
 	
 	public static final Charset
@@ -150,7 +163,23 @@ public interface ICommPort extends IDisposable {
 	boolean print(CharSequence value, CharsetEncoder encoder);
 	boolean write(CharBuffer value, Charset charset);
 	boolean write(CharBuffer value, CharsetEncoder encoder);
+	boolean write(byte value);
+	boolean write(short value);
+	boolean write(int value);
+	boolean write(long value);
+	boolean write(float value);
+	boolean write(double value);
+	boolean write(char value);
 	boolean write(byte[] buffer, int offset, int length);
+	
+	boolean write(short value, ByteOrder order);
+	boolean write(int value, ByteOrder order);
+	boolean write(long value, ByteOrder order);
+	boolean write(float value, ByteOrder order);
+	boolean write(double value, ByteOrder order);
+	boolean write(char value, ByteOrder order);
+	boolean write(byte[] buffer, int offset, int length, ByteOrder order);
+	
 	boolean write(ByteBuffer buffer, int offset, int length);
 	
 	boolean open(int readBufferSize, int writeBufferSize);
