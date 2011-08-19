@@ -30,17 +30,15 @@ package comm.platform.dev;
 
 import comm.DataBits;
 import comm.FlowControl;
-import comm.ISerialPort;
 import comm.Parity;
 import comm.PortType;
-import comm.SerialPorts;
 import comm.StopBits;
 
 /**
  *
  * @author David Hoyt <dhoyt@hoytsoft.org>
  */
-public abstract class SerialPort extends CommPort implements ISerialPort {
+public abstract class SerialPort extends CommPort implements comm.SerialPort {
 	//<editor-fold defaultstate="collapsed" desc="Variables">
 	protected int baudRate;
 	protected DataBits dataBits;

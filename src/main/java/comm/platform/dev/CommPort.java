@@ -28,7 +28,6 @@
  */
 package comm.platform.dev;
 
-import comm.ICommPort;
 import comm.PortType;
 import comm.util.StringUtil;
 import java.nio.ByteBuffer;
@@ -44,7 +43,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  *
  * @author David Hoyt <dhoyt@hoytsoft.org>
  */
-public abstract class CommPort extends DisposableObject implements ICommPort {
+public abstract class CommPort extends DisposableObject implements comm.CommPort {
 	//<editor-fold defaultstate="collapsed" desc="Variables">
 	protected final Object commLock = new Object();
 	protected String name, title, description, owner;

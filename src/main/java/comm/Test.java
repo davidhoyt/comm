@@ -4,12 +4,8 @@
  */
 package comm;
 
-import comm.CommPorts;
-import comm.ICommPort;
 import comm.ICommPort.IReadListener;
 import comm.ICommPort.IWriteListener;
-import comm.ISerialPort;
-import comm.SerialPorts;
 import comm.platform.api.MemoryBuffer;
 import comm.util.StringUtil;
 import java.io.IOException;
@@ -31,6 +27,9 @@ class Test {
 		if (serialPort == null)
 			serialPort = comm.SerialPorts.getAvailableSerialPorts()[0];
 		
+		serialPort.configure(921600, ISerialPort.DATABITS_8, ISerialPort.STOPBITS_1, ISerialPort.PARITY_NONE);
+		serialPort.changeFlowControl(ISerialPort.FLOWCONTROL_NONE);
+		
 		//SerialPorts.addPlatformHint(PlatformHint.IOCompletionPortNumberOfConcurrentThreads, 2);
 		
 		System.out.println("Opening " + serialPort.getName() + " [" + serialPort.getTitle() + "]");
@@ -39,7 +38,15 @@ class Test {
 			@Override
 			public void bytesRead(ByteBuffer buffer, int offset, int bytesRead) {
 				try {
-					System.out.println(Thread.currentThread().getName() +  ", recv: " + decoder.decode(buffer).toString());
+					synchronized(decoder) {
+						CharBuffer cb = CharBuffer.allocate(bytesRead);
+						decoder.decode(buffer, cb, true);
+						cb.flip();
+					
+						String msg = cb.toString();
+						
+						System.out.println(Thread.currentThread().getName() +  ", recv: " + msg);
+					}
 				} catch(Throwable t) {
 				}
 			}
@@ -72,13 +79,15 @@ class Test {
 						output_size[0] += length;
 					}
 					
-					CharBuffer cb = CharBuffer.allocate(length);
-					decoder.decode(buffer, cb, true);
-					cb.flip();
+					synchronized(decoder) {
+						CharBuffer cb = CharBuffer.allocate(length);
+						decoder.decode(buffer, cb, true);
+						cb.flip();
 					
-					String msg = cb.toString();
-					
-					output.append(msg);
+						String msg = cb.toString();
+
+						output.append(msg);
+					}
 				} catch(Throwable t) {
 					t.printStackTrace();
 				}
@@ -105,7 +114,7 @@ class Test {
 		expectedMsgLength += NEWLINE_LEN;
 		++expectedMsgCount;
 		
-		for(int i = 0; i < 1000; ++i) {
+		for(int i = 0; i < 500; ++i) {
 			for(int j = 100; j <= 115; ++j) {
 				num = j + ".";
 				serialPort.print(num);
@@ -127,12 +136,14 @@ class Test {
 			System.out.println("MSG COUNT: " + msg_count[0] + ", EXPECTING: " + expectedMsgCount);
 			Thread.sleep(1000);
 		}
-		//Thread.sleep(30000 * 1);
 		System.out.println("EXPECTED: " + expectedMsgLength);
 		System.out.println("SIZE: " + output.length());
 		System.out.println("OUTPUT SIZE: " + output_size[0]);
 		//System.out.println("OUTPUT:");
 		//System.out.print(output.toString());
+		
+		//Thread.sleep(30000 * 1);
+		
 		serialPort.close();
 		
 //		System.gc();

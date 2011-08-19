@@ -26,71 +26,18 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY
  * OF SUCH DAMAGE.
  */
-package comm.platform.dev;
-
-import comm.PortType;
+package comm;
 
 /**
- *
+ * For those of you who dislike interfaces starting with "I".
+ * 
+ * Please see {@link IParallelPort}.
+ * 
  * @author David Hoyt <dhoyt@hoytsoft.org>
  */
-public abstract class ParallelPort extends CommPort implements comm.ParallelPort {
-	//<editor-fold defaultstate="collapsed" desc="Variables">
-	//</editor-fold>
-	
-	//<editor-fold defaultstate="collapsed" desc="Init">
-	protected ParallelPort(String name, String title, String description, PortType portType) {
-		super(name, title, description, portType);
-		init();
-	}
-	
-	protected ParallelPort() {
-		super();
-		init();
-	}
-	
-	private void init() {
-		//Use the system default values when setting these options.
+public interface ParallelPort extends IParallelPort {
+	//<editor-fold defaultstate="collapsed" desc="Interfaces">
+	public static interface Configuration extends IParallelPort.IConfiguration {
 	}
 	//</editor-fold>
-
-	//<editor-fold defaultstate="collapsed" desc="Getters">
-	//</editor-fold>
-	
-	//<editor-fold defaultstate="collapsed" desc="Helper Methods">
-	//</editor-fold>
-	
-	//<editor-fold defaultstate="collapsed" desc="Public Methods">
-	@Override
-	public final boolean updateConfiguration() {
-		synchronized(commLock) {
-			return configureSystemParallelPort(/*Use local variables*/);
-		}
-	}
-	
-	@Override
-	public final boolean configure(IConfiguration config) {
-		if (config == null)
-			return false;
-		return configure();
-	}
-	
-	@Override
-	public final boolean configure() {
-		synchronized(commLock) {
-			if (!opened) {
-				/*Just update local variables and return.*/
-				return true;
-			}
-			
-			if (configureSystemParallelPort()) {
-				/*Update local variables.*/
-				return true;
-			}
-		}
-		return false;
-	}
-	//</editor-fold>
-
-	protected abstract boolean configureSystemParallelPort();
 }
