@@ -23,12 +23,14 @@
 	
 	<distributionManagement>
 		<repository>
-			<id>dist-release-repo</id>
-			<url>https://raw.github.com/davidhoyt/mvn-repo/master/maven2/releases</url>
+			<id>github-davidhoyt-release-repo</id>
+			<name>Github David Hoyt Maven Release Repository</name>
+			<url>http://davidhoyt.github.com/mvn-repo/2/releases/</url>
 		</repository>
 		<snapshotRepository>
-			<id>dist-snapshot-repo</id>
-			<url>https://raw.github.com/davidhoyt/mvn-repo/master/maven2/snapshots</url>
+			<id>github-davidhoyt-snapshot-repo</id>
+			<name>Github David Hoyt Maven Snapshot Repository</name>
+			<url>http://davidhoyt.github.com/mvn-repo/2/snapshots/</url>
 		</snapshotRepository>
 	</distributionManagement>
 	

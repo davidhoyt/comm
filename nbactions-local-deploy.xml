@@ -10,7 +10,7 @@
         <action>
             <actionName>rebuild</actionName>
             <goals>
-                <goal>-DaltDeploymentRepository=dist-snapshot-repo::default::file:../mvn-repo/maven2/snapshots</goal>
+                <goal>-DaltDeploymentRepository=dist-snapshot-repo::default::file:../mvn-repo/2/releases</goal>
                 <goal>clean</goal>
                 <goal>deploy</goal>
             </goals>
@@ -19,14 +19,14 @@
             <actionName>build-with-dependencies</actionName>
             <reactor>also-make</reactor>
             <goals>
-                <goal>-DaltDeploymentRepository=dist-snapshot-repo::default::file:../mvn-repo/maven2/snapshots</goal>
+                <goal>-DaltDeploymentRepository=dist-snapshot-repo::default::file:../mvn-repo/2/releases</goal>
                 <goal>deploy</goal>
             </goals>
         </action>
         <action>
             <actionName>build</actionName>
             <goals>
-                <goal>-DaltDeploymentRepository=dist-snapshot-repo::default::file:../mvn-repo/maven2/snapshots</goal>
+                <goal>-DaltDeploymentRepository=dist-snapshot-repo::default::file:../mvn-repo/2/releases</goal>
                 <goal>deploy</goal>
             </goals>
         </action>
